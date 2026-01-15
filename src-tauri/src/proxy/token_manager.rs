@@ -989,17 +989,6 @@ impl TokenManager {
         );
     }
     
-    /// 检查账号是否在限流中
-    /// 参数为 email，内部会自动转换为 account_id
-    pub fn is_rate_limited(&self, email: &str) -> bool {
-        // 【替代方案】转换 email -> account_id
-        if let Some(account_id) = self.email_to_account_id(email) {
-            self.rate_limit_tracker.is_rate_limited(&account_id)
-        } else {
-            // Fallback: 如果找不到，直接用email查询(兼容旧数据)
-            self.rate_limit_tracker.is_rate_limited(email)
-        }
-    }
 
     /// 检查账号是否在限流中 (直接使用 account_id)
     pub fn is_rate_limited_by_account_id(&self, account_id: &str) -> bool {
